@@ -1,42 +1,326 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.hero-services {
+  list-style: none;
+  margin: 1rem 0 1.5rem 0;
+  padding: 0;
+}
+
+.hero-services li {
+  margin: 0.4rem 0;
+  font-size: 1.05rem;
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.6;
+}
+
+.hero-services li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cta.primary {
+  background-color: #007bff;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.cta.primary:hover {
+  background-color: #0056b3;
+}
+
+.cta.secondary {
+  background-color: #28a745;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.cta.secondary:hover {
+  background-color: #1e7e34;
+}
+
+/* 🔹 Logo */
+.logo-container {
+  background: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  width: 60px;
+  height: auto;
+  margin: 0;
+  cursor: pointer;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* 🔹 Navbar */
+.nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 40px;
+  background: #267190;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-name {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links li a {
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #ffdd57;
+}
+
+/* 🔹 Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column; /* tumpuk hero-content di atas highlight-list */
+  align-items: center;
+  margin-top: 0;
+  position: relative;
+  padding: 40px 8%;
+  color: white;
+  overflow: hidden;
+  gap: 30px; /* jarak antara hero-content & highlight-list */
+}
+
+.hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 18px;
+  opacity: 0.85;
+  mix-blend-mode: lighten; /* menyatu dengan background */
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/background-2.png") no-repeat center center;
+  background-size: cover;
+  filter: blur(3px) brightness(0.6);
+  z-index: -2;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: -1;
+}
+
+.highlight-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.highlight-list li {
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.3rem; /* ubah sesuai keinginan */
+}
+
+.hero-text {
+  max-width: 700px;
+  padding: 20px;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Hero Card */
+.hero-card {
+  background: white;
+  color: #333;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  padding: 40px;
+  max-width: 420px;
+  text-align: left;
+  z-index: 1;
+}
+
+.hero-card h1 {
+  font-size: 2.2rem;
+  color: #267190;
+  margin-bottom: 0.6rem;
+}
+
+.hero-card .tagline {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.hero-card p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+
+.tagline {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: row; /* card & image sejajar horizontal */
+  gap: 40px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 About Section */
+.about {
+  padding: 80px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #267190;
+}
+
+.about p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* 🔹 Layout Helper */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* PROGRAMS SECTION */
+.programs {
+  padding: 60px 20px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.programs h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #0876ac;
+}
+
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.program-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.program-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #267190;
+}
+
+.program-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.program-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* RESPONSIF */
+@media (max-width: 768px) {
+  .hero {
+    justify-content: center; /* center di layar kecil */
+    padding-left: 0;
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+  .hero-card {
+    text-align: center;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .hero-services li {
+    justify-content: center;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
