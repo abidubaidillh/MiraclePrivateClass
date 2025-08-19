@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import logo from "./assets/Logo-MiraclePrivateClass.png";
+import logoMPC from "./assets/Logo-MPC.jpg";
 import heroImage from "./assets/asset(1).jpg";
+import fotoFitri from "./assets/testimoni-1.jpg";
 import axios from "axios";
 
 /* ================= Hero Components ================= */
@@ -55,15 +57,15 @@ const ProgramList = ({ programs }) => {
             onClick={() => setActiveProgramId(isActive ? null : prog.id)}
           >
             <h3>{prog.name}</h3>
-            <p><strong>Durasi:</strong> {prog.duration}</p>
+            <p><strong>Pertemuan:</strong> {prog.duration}</p>
             <p><strong>Metode:</strong> {prog.method}</p>
-            <p><strong>Pertemuan:</strong> {prog.sessions}</p>
+            <p><strong>Durasi:</strong> {prog.sessions}</p>
 
             {isActive && (
               <div className="cta-buttons">
                 <a
                   className="cta primary"
-                  href="https://bit.ly/DaftarSekarang"
+                  href="https://forms.gle/n9QXeFyKGkzcQgaz7"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
@@ -72,7 +74,7 @@ const ProgramList = ({ programs }) => {
                 </a>
                 <a
                   className="cta secondary"
-                  href={`https://wa.me/6282197150696?text=Halo,%20saya%20ingin%20konsultasi%20tentang%20${encodeURIComponent(prog.name)}`}
+                  href={`https://wa.me/6285796452485?text=${encodeURIComponent("Halo, Perkenalkan saya [Nama Anda]. Saya tertarik untuk memesan kelas privat, Mohon Informasinya ?")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
@@ -88,13 +90,13 @@ const ProgramList = ({ programs }) => {
   );
 };
 
+
+
 /* ================= Navbar ================= */
 const Navbar = () => {
   const handleLogoClick = () => {
     // Scroll ke atas halaman
     window.scrollTo({ top: 0, behavior: "smooth" });
-    // Jika ada state lain di App.js yang menandakan halaman "awal",
-    // bisa direset juga di sini lewat props atau context
   };
 
   return (
@@ -107,13 +109,51 @@ const Navbar = () => {
       </div>
       <ul className="nav-links">
         <li><a href="#programs">Program</a></li>
-        <li><a href="#about">Tentang Kami</a></li>
         <li><a href="#testimoni">Testimoni</a></li>
+        <li><a href="#about">Tentang Kami</a></li>
         <li><a href="#kontak">Kontak</a></li>
       </ul>
     </nav>
   );
 };
+
+/* ================= Footer ================= */
+
+const Footer = () => (
+<footer className="footer">
+  <div className="footer-content">
+    <div className="footer-left">
+      <div className="footer-logo-container">
+        <img src={logo} alt="Miracle Private Class" className="footer-logo" />
+      </div>
+      <h3 className="footer-brand">Miracle Private Class</h3>
+      <p className="footer-tagline">Dengan Ilmu Meraih Keajaiban</p>
+    </div>
+
+    <div className="footer-middle">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#programs">Program</a></li>
+        <li><a href="#testimoni">Testimoni</a></li>
+        <li><a href="#about">Tentang Kami</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </div>
+
+    <div className="footer-right">
+      <h4>Kontak</h4>
+      <p>📍 Kota Palu Sulawesi Tengah</p>
+      <p>📞 <a href="tel:+6285796452485">+62 857-9645-2485</a></p>
+      <p>✉️ <a href="mailto:miracleprivate99@gmail.com">miracleprivate99@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div className="footer-bottom">
+    <p>© 2025 Miracle Private Class. All Rights Reserved.</p>
+  </div>
+</footer>
+);
+
 
 /* ================= Main App ================= */
 function App() {
@@ -161,7 +201,7 @@ function App() {
       {/* Programs Section */}
       <section id="programs" className="programs">
         <div className="container">
-          <h2>Program Kami</h2>
+          <h2>Program</h2>
           {loading && <p>Sedang memuat program...</p>}
           {error && <p className="error">{error}</p>}
 
@@ -175,6 +215,28 @@ function App() {
         </div>
       </section>
 
+      {/* Testimoni Section */}
+    <section id="testimoni" className="testimoni">
+      <div className="container">
+        <h2>Kata Mereka</h2>
+        <div className="testimoni-list">
+          <div className="testimoni-item">
+            <img src={fotoFitri} alt="Foto Ibu Fitri" className="testimoni-img" />
+            <div className="testimoni-text">
+              <p>
+                "Alhamdulillah selama bergabung di <strong>Miracle Private Class</strong> merasa terbantu untuk memperlancar bacaan 
+                ananda dan klu pas kembar ada tgs ada mbak gurux bantu kawal nyong🙏 jadi umma pe tensi aman2😂"
+              </p>
+              <span>
+                - Ibu Fitri (Wali Murid) / Hasan & Husein (Privat Calistung)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
       {/* About Section */}
       <section id="about" className="about">
         <div className="container">
@@ -184,9 +246,11 @@ function App() {
             dan metode belajar personal sesuai kebutuhan siswa.
           </p>
         </div>
-      </section>
+      </section>   {/* ✅ ditutup dengan benar */}
+
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
-
 export default App;
