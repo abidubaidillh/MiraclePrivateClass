@@ -1,3 +1,4 @@
+/* ================= HERO SERVICES ================= */
 .hero-services {
   list-style: none;
   margin: 1rem 0 1.5rem 0;
@@ -20,41 +21,59 @@
   font-weight: bold;
 }
 
+/* ================= CTA BUTTONS ================= */
+.cta {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  text-align: center;
+}
+
 .cta-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
+  justify-content: center;
   flex-wrap: wrap;
+  margin-top: 12px;
 }
 
 .cta.primary {
-  background-color: #007bff;
-  color: white;
-  padding: 0.7rem 1.2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  background-color: #267190;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(38, 113, 144, 0.3);
 }
 
 .cta.primary:hover {
-  background-color: #0056b3;
+  background-color: #1e5970;
+  box-shadow: 0 5px 14px rgba(38, 113, 144, 0.4);
+  transform: translateY(-1px);
 }
 
 .cta.secondary {
-  background-color: #28a745;
-  color: white;
-  padding: 0.7rem 1.2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  padding: 10px;
+  background-color: #ffffff;
+  color: #267190;
+  border: 2px solid #267190;
+  box-shadow: 0 3px 8px rgba(38, 113, 144, 0.15);
 }
 
 .cta.secondary:hover {
-  background-color: #1e7e34;
+  background-color: #267190;
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(38, 113, 144, 0.3);
+  transform: translateY(-1px);
 }
 
-/* 🔹 Logo */
+/* ================= LOGO ================= */
 .logo-container {
   background: white;
   padding: 6px 12px;
@@ -71,7 +90,7 @@
   cursor: pointer;
 }
 
-/* 🔹 Navbar */
+/* ================= NAVBAR ================= */
 .nav {
   position: sticky;
   top: 0;
@@ -112,7 +131,7 @@
   color: #ffdd57;
 }
 
-/* 🔹 Hero Section */
+/* ================= HERO SECTION ================= */
 .hero {
   display: flex;
   flex-direction: column; /* tumpuk hero-content di atas highlight-list */
@@ -123,6 +142,15 @@
   color: white;
   overflow: hidden;
   gap: 30px; /* jarak antara hero-content & highlight-list */
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: row; /* card & image sejajar horizontal */
+  gap: 40px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-right {
@@ -173,7 +201,7 @@
   border-radius: 12px;
   font-weight: 600;
   text-align: center;
-  font-size: 1.3rem; /* ubah sesuai keinginan */
+  font-size: 1.3rem;
 }
 
 .hero-text {
@@ -182,7 +210,7 @@
   text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
 }
 
-/* Hero Card */
+/* ================= HERO CARD ================= */
 .hero-card {
   background: white;
   color: #333;
@@ -213,7 +241,6 @@
   color: #555;
 }
 
-
 .tagline {
   font-size: 1.6rem;
   margin-bottom: 2rem;
@@ -230,16 +257,7 @@
   margin-bottom: 2rem;
 }
 
-.hero-content {
-  display: flex;
-  flex-direction: row; /* card & image sejajar horizontal */
-  gap: 40px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 🔹 About Section */
+/* ================= ABOUT SECTION ================= */
 .about {
   padding: 80px 20px;
   background: #f9f9f9;
@@ -260,14 +278,14 @@
   line-height: 1.8;
 }
 
-/* 🔹 Layout Helper */
+/* ================= LAYOUT HELPER ================= */
 .container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* PROGRAMS SECTION */
+/* ================= PROGRAMS SECTION ================= */
 .programs {
   padding: 60px 20px;
   background: #f8fafc;
@@ -301,8 +319,18 @@
 }
 
 .program-card p {
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
-  color: #555;
+  color: #444;
+  margin: 6px 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.program-card p strong {
+  color: #267190;
+  font-weight: 600;
 }
 
 .program-card:hover {
@@ -310,17 +338,47 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* RESPONSIF */
+.category-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.category-btn {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #267190;
+  background-color: white;
+  color: #267190;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: #267190;
+  color: white;
+}
+
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .hero {
-    justify-content: center; /* center di layar kecil */
+    justify-content: center;
     padding-left: 0;
     text-align: center;
   }
+
   .hero-card {
     text-align: center;
   }
+
   .hero-services li {
     justify-content: center;
+  }
+
+  .hero-right {
+    width: 100%;
   }
 }
