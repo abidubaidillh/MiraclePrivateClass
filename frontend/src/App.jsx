@@ -1,9 +1,10 @@
 import React, { useState, useEffect, memo } from "react";
 import "./App.css"; // Mengimpor file CSS yang telah digabungkan
+import axios from "axios";
 import logo from "./assets/Logo-MiraclePrivateClass.png";
 import heroImage from "./assets/asset(1).jpg";
 import fotoFitri from "./assets/testimoni-1.jpg";
-import axios from "axios";
+import { supabase } from "./supabaseClient";
 
 /* =========================== Component Definitions ========================== */
 
@@ -94,7 +95,7 @@ const ProgramList = memo(({ programs }) => {
 // Main Navbar component
 const Navbar = memo(() => {
   const handleLogoClick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  
+
   return (
     <nav className="nav">
       <div className="nav-left">
@@ -105,9 +106,8 @@ const Navbar = memo(() => {
       </div>
       <ul className="nav-links">
         <li><a href="#programs">Program</a></li>
-        <li><a href="#testimoni">Testimoni</a></li>
-        <li><a href="#about">Tentang Kami</a></li>
-        <li><a href="#kontak">Kontak</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#artikel">Artikel</a></li> {/* 🔥 Tambahan baru */}
       </ul>
     </nav>
   );
@@ -173,6 +173,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Kelas Khusus");
+  const [files, setFiles] = useState([]);
+  const [fotoUrls, setFotoUrls] = useState([]);
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [articles, setArticles] = useState([]); // ⬅️ Tambahkan state untuk artikel
 
   const categories = ["Kelas Khusus", "Privat Akademik", "Persiapan Ujian"];
 
@@ -191,6 +195,8 @@ function App() {
     getPrograms();
   }, []);
 
+  const filteredPrograms = programs.filter(p => p.category === activeCategory);
+
   useEffect(() => {
     async function getTeachers() {
       try {
@@ -203,7 +209,40 @@ function App() {
     getTeachers();
   }, []);
 
-  const filteredPrograms = programs.filter(p => p.category === activeCategory);
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const fotoRes = await fetch("http://localhost:5000/api/galeri/foto");
+        const videoRes = await fetch("http://localhost:5000/api/galeri/video");
+
+        const fotoData = await fotoRes.json();
+        const videoData = await videoRes.json();
+
+        setFotoUrls(fotoData);
+        setVideoUrls(videoData);
+
+        console.log("✅ Foto:", fotoData);
+        console.log("✅ Video:", videoData);
+      } catch (err) {
+        console.error("❌ Gagal fetch galeri:", err);
+      }
+    };
+
+    fetchGallery();
+  }, []);
+
+    useEffect(() => {
+    // Fetch artikel dari backend
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/articles");
+        setArticles(res.data);
+      } catch (err) {
+        console.error("❌ Gagal fetch artikel:", err);
+      }
+    };
+    fetchArticles();
+  }, []);
 
   return (
     <>
@@ -275,6 +314,44 @@ function App() {
         </div>
       </section>
 
+  <section id="galeri" className="gallery-section">
+  <div className="gallery-container">
+    <h2 className="gallery-title">Galeri</h2>
+
+    <div className="gallery-flex">
+      {/* Foto */}
+      <div className="gallery-column">
+        <h3 className="gallery-subtitle">📸 Foto</h3>
+        <div className="gallery-grid">
+          {fotoUrls.map((url, i) => (
+            <img
+              key={i}
+              src={url}
+              alt={`Foto ${i}`}
+              className="gallery-image"
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Video */}
+      <div className="gallery-column">
+        <h3 className="gallery-subtitle">🎥 Video</h3>
+        <div className="gallery-grid">
+          {videoUrls.map((url, i) => (
+            <video
+              key={i}
+              src={url}
+              controls
+              className="gallery-video"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       {/* Teachers Section */}
       <section id="teachers" className="teachers">
         <div className="container">
@@ -285,6 +362,39 @@ function App() {
                 <img src={teacher.photo_url} alt={teacher.name} />
                 <h3>{teacher.name}</h3>
                 <p>{teacher.subject}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="artikel" className="article-section">
+        <div className="article-container">
+          <h2 className="article-title">Baca Artikel &gt;&gt;&gt;</h2>
+          <div className="article-grid">
+            {articles.map((article) => (
+              <div key={article.id} className="article-card">
+                {article.image_url && (
+                  <img
+                    src={article.image_url}
+                    alt={article.title}
+                    className="article-image"
+                  />
+                )}
+                <h3 className="article-card-title">{article.title}</h3>
+                <p className="article-date">
+                  {new Date(article.created_at).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <p className="article-excerpt">
+                  {article.content.length > 120
+                    ? `${article.content.substring(0, 120)}...`
+                    : article.content}
+                </p>
+                <button className="article-btn">Baca Selengkapnya</button>
               </div>
             ))}
           </div>
