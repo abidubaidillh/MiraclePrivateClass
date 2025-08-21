@@ -335,6 +335,20 @@ function App() {
                 {/* ...teachers content sama seperti sebelumnya... */}
               </section>
 
+              <section id="teachers" className="teachers"> 
+                <div className="container"> 
+                  <h2>Tim Pengajar</h2> 
+                  <div className="teachers-list"> 
+                    {teachers.map((teacher) => ( <div key={teacher.id} 
+                    className="teacher-card"> 
+                    <img src={teacher.photo_url} alt={teacher.name} /> 
+                    <h3>{teacher.name}</h3> 
+                    <p>{teacher.subject}</p> 
+                    </div> ))} 
+                  </div> 
+                </div> 
+              </section>
+
               {/* Artikel */}
               <section id="artikel" className="article-section">
                 <div className="article-container">
