@@ -166,6 +166,12 @@ const Footer = memo(() => (
   </footer>
 ));
 
+// Tambahkan ini di atas App() function
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000/api", // ganti 192.168.1.10 jadi localhost
+  timeout: 5000,
+});
+
 /* =============================== Main App Component =============================== */
 function App() {
   const [programs, setPrograms] = useState([]);
@@ -176,73 +182,71 @@ function App() {
   const [files, setFiles] = useState([]);
   const [fotoUrls, setFotoUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
-  const [articles, setArticles] = useState([]); // ⬅️ Tambahkan state untuk artikel
+  const [articles, setArticles] = useState([]);
+    const filteredPrograms = programs.filter(p => p.category === activeCategory);
 
   const categories = ["Kelas Khusus", "Privat Akademik", "Persiapan Ujian"];
 
-  useEffect(() => {
-    async function getPrograms() {
-      try {
-        const response = await axios.get("http://192.168.1.10:5000/api/programs");
-        setPrograms(response.data);
-      } catch (err) {
-        console.error("Error fetching programs:", err);
-        setError("Gagal memuat program. Silakan coba lagi nanti.");
-      } finally {
-        setLoading(false);
-      }
+  // Programs
+useEffect(() => {
+  async function getPrograms() {
+    try {
+      const response = await axiosInstance.get("/programs"); // cukup /programs
+      setPrograms(response.data);
+    } catch (err) {
+      console.error("Error fetching programs:", err);
+      setError("Gagal memuat program. Silakan coba lagi nanti.");
+    } finally {
+      setLoading(false);
     }
-    getPrograms();
-  }, []);
+  }
+  getPrograms();
+}, []);
 
-  const filteredPrograms = programs.filter(p => p.category === activeCategory);
-
-  useEffect(() => {
-    async function getTeachers() {
-      try {
-        const response = await axios.get("http://192.168.1.10:5000/api/teachers");
-        setTeachers(response.data);
-      } catch (err) {
-        console.error("Error fetching teachers:", err);
-      }
+  // Teachers
+useEffect(() => {
+  async function getTeachers() {
+    try {
+      const response = await axiosInstance.get("/teachers"); // cukup /teachers
+      setTeachers(response.data);
+    } catch (err) {
+      console.error("Error fetching teachers:", err);
     }
-    getTeachers();
-  }, []);
+  }
+  getTeachers();
+}, []);
 
-  useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const fotoRes = await fetch("http://localhost:5000/api/galeri/foto");
-        const videoRes = await fetch("http://localhost:5000/api/galeri/video");
 
-        const fotoData = await fotoRes.json();
-        const videoData = await videoRes.json();
+useEffect(() => {
+  const fetchGallery = async () => {
+    try {
+      const fotoRes = await axiosInstance.get("/galeri/foto");
+      const videoRes = await axiosInstance.get("/galeri/video");
 
-        setFotoUrls(fotoData);
-        setVideoUrls(videoData);
+      setFotoUrls(fotoRes.data);
+      setVideoUrls(videoRes.data);
 
-        console.log("✅ Foto:", fotoData);
-        console.log("✅ Video:", videoData);
-      } catch (err) {
-        console.error("❌ Gagal fetch galeri:", err);
-      }
-    };
+      console.log("✅ Foto:", fotoRes.data);
+      console.log("✅ Video:", videoRes.data);
+    } catch (err) {
+      console.error("❌ Gagal fetch galeri:", err);
+    }
+  };
+  fetchGallery();
+}, []);
 
-    fetchGallery();
-  }, []);
-
-    useEffect(() => {
-    // Fetch artikel dari backend
-    const fetchArticles = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/articles");
-        setArticles(res.data);
-      } catch (err) {
-        console.error("❌ Gagal fetch artikel:", err);
-      }
-    };
-    fetchArticles();
-  }, []);
+  // Articles
+useEffect(() => {
+  const fetchArticles = async () => {
+    try {
+      const res = await axiosInstance.get("/articles"); // cukup /articles
+      setArticles(res.data);
+    } catch (err) {
+      console.error("❌ Gagal fetch artikel:", err);
+    }
+  };
+  fetchArticles();
+}, []);
 
   return (
     <>
