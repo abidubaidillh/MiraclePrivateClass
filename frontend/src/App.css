@@ -572,30 +572,32 @@
 /* Title */
 .article-title {
   font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #0a2540; /* warna gelap profesional */
+  margin-bottom: 20px;
+  color: #0a2540;
   font-weight: 500;
-  text-align: left; /* rata kiri */
+  text-align: left;
   display: block;
 }
 
 /* Grid */
 .article-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* lebih kecil */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
 /* Card */
 .article-card {
-  background: #f9fafb;
+  position: relative;
+  height: 180px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
   display: flex;
-  flex-direction: column;
-  height: 100%; /* biar seragam */
+  align-items: flex-end;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .article-card:hover {
@@ -603,51 +605,32 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.article-image {
+/* Overlay untuk judul dengan gradient blur di bawah */
+.article-card-overlay {
+  position: absolute; /* agar menempel di bawah card */
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 140px; /* lebih kecil */
-  object-fit: cover;
+  height: 50%; /* menutupi setengah bawah card */
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-end; /* judul di bawah overlay */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7), /* bawah lebih gelap */
+    rgba(0, 0, 0, 0)    /* ke atas transparan */
+  );
+  color: white;
 }
 
 .article-card-title {
-  font-size: 1.1rem;
-  margin: 12px 14px 6px 14px;
-  color: #222;
+  margin: 0;
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.2;
 }
 
-.article-date {
-  font-size: 0.8rem;
-  margin: 0 14px 8px 14px;
-  color: #777;
-}
-
-.article-excerpt {
-  font-size: 0.9rem;
-  margin: 0 14px 12px 14px;
-  color: #444;
-  flex-grow: 1;
-  line-height: 1.4;
-}
-
-/* Tombol */
-.article-btn {
-  margin: 0 14px 14px 14px;
-  padding: 8px 14px;
-  background: #0876ac;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.3s ease;
-  align-self: flex-start;
-}
-
-.article-btn:hover {
-  background: #065a82;
-}
+/* Hilangkan elemen p dan tombol */
 
 /* ================================ FOOTER ================================ */
 .footer {

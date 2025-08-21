@@ -372,38 +372,27 @@ useEffect(() => {
         </div>
       </section>
 
-      <section id="artikel" className="article-section">
-        <div className="article-container">
-          <h2 className="article-title">Baca Artikel &gt;&gt;&gt;</h2>
-          <div className="article-grid">
-            {articles.map((article) => (
-              <div key={article.id} className="article-card">
-                {article.image_url && (
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="article-image"
-                  />
-                )}
-                <h3 className="article-card-title">{article.title}</h3>
-                <p className="article-date">
-                  {new Date(article.created_at).toLocaleDateString("id-ID", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-                <p className="article-excerpt">
-                  {article.content.length > 120
-                    ? `${article.content.substring(0, 120)}...`
-                    : article.content}
-                </p>
-                <button className="article-btn">Baca Selengkapnya</button>
-              </div>
-            ))}
+<section id="artikel" className="article-section">
+  <div className="article-container">
+    <h2 className="article-title">Baca Artikel &gt;&gt;&gt;</h2>
+    <div className="article-grid">
+      {articles.map((article) => (
+        <div
+          key={article.id}
+          className="article-card"
+          style={{
+            backgroundImage: `url(${article.image_url})`,
+          }}
+          onClick={() => window.location.href = `/artikel/${article.id}`} // klik langsung ke detail artikel
+        >
+          <div className="article-card-overlay">
+            <h3 className="article-card-title">{article.title}</h3>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
       
       {/* Footer */}
       <Footer />
