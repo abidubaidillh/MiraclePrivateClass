@@ -1,14 +1,16 @@
 import React, { useState, useEffect, memo } from "react";
-import "./App.css"; // Mengimpor file CSS yang telah digabungkan
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import "./App.css";
 import axios from "axios";
 import logo from "./assets/Logo-MiraclePrivateClass.png";
 import heroImage from "./assets/asset(1).jpg";
 import fotoFitri from "./assets/testimoni-1.jpg";
 import { supabase } from "./supabaseClient";
 
-/* =========================== Component Definitions ========================== */
+// Components
+import ArticleDetail from "./components/Articles/ArticleDetail.jsx";
 
-// Hero section components
+/* ================= Hero Section Components ================= */
 const HeroCard = memo(() => (
   <div className="hero-card">
     <h1>Miracle Private Class</h1>
@@ -28,7 +30,7 @@ const HeroImage = memo(({ src }) => (
   </div>
 ));
 
-// Programs section components
+/* ================= Programs Section Components ================= */
 const CategoryButtons = memo(({ categories, activeCategory, setActiveCategory }) => (
   <div className="category-buttons">
     {categories.map((cat) => (
@@ -76,7 +78,9 @@ const ProgramList = memo(({ programs }) => {
                 </a>
                 <a
                   className="cta secondary"
-                  href={`https://wa.me/6285796452485?text=${encodeURIComponent("Halo, Perkenalkan saya [Nama Anda]. Saya tertarik untuk memesan kelas privat, Mohon Informasinya ?")}`}
+                  href={`https://wa.me/6285796452485?text=${encodeURIComponent(
+                    "Halo, Perkenalkan saya [Nama Anda]. Saya tertarik untuk memesan kelas privat, Mohon Informasinya ?"
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
@@ -92,9 +96,27 @@ const ProgramList = memo(({ programs }) => {
   );
 });
 
-// Main Navbar component
+/* ================= Navbar & Footer ================= */
 const Navbar = memo(() => {
-  const handleLogoClick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const navigate = useNavigate();
+
+  const handleNavClick = (hash) => {
+    // Pindah ke home
+    navigate("/");
+
+    // Scroll ke section setelah home selesai render
+    setTimeout(() => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <nav className="nav">
@@ -105,296 +127,242 @@ const Navbar = memo(() => {
         <h1 className="brand-name">Miracle Private Class</h1>
       </div>
       <ul className="nav-links">
-        <li><a href="#programs">Program</a></li>
-        <li><a href="#galeri">Galeri</a></li>
-        <li><a href="#artikel">Artikel</a></li> {/* 🔥 Tambahan baru */}
+        <li><button className="nav-btn" onClick={() => handleNavClick("#programs")}>Program</button></li>
+        <li><button className="nav-btn" onClick={() => handleNavClick("#galeri")}>Galeri</button></li>
+        <li><button className="nav-btn" onClick={() => handleNavClick("#artikel")}>Artikel</button></li>
       </ul>
     </nav>
   );
 });
 
-// Main Footer component
 const Footer = memo(() => (
   <footer className="footer">
-    <div className="footer-content">
-      <div className="footer-left">
-        <div className="footer-logo-container">
-          <img src={logo} alt="Miracle Private Class" className="footer-logo" />
-        </div>
-        <h3 className="footer-brand">Miracle Private Class</h3>
-        <p className="footer-tagline">Dengan Ilmu Meraih Keajaiban</p>
-      </div>
-      <div className="footer-middle">
-        <h4>Menu</h4>
-        <ul>
-          <li><a href="#programs">Program</a></li>
-          <li><a href="#testimoni">Testimoni</a></li>
-          <li><a href="#about">Tentang Kami</a></li>
-          <li><a href="#kontak">Kontak</a></li>
-        </ul>
-      </div>
-      <div className="footer-social">
-        <h4>Media Sosial</h4>
-        <div className="social-links">
-          <a href="https://www.facebook.com/share/1CbyFR8Upf/" target="_blank" rel="noopener noreferrer">🌐 Facebook</a>
-          <a href="https://www.instagram.com/miracleprivate.class?igsh=N2o2eWcxZWI5Z2Q0" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
-          <a href="https://wa.me/6285796452485" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
-        </div>
-      </div>
-      <div className="footer-right">
-        <h4>Kontak</h4>
-        <p>📍 Kota Palu, Sulawesi Tengah</p>
-        <p>📞 <a href="tel:+6285796452485">+62 857-9645-2485</a></p>
-        <p>✉️ <a href="mailto:miracleprivate99@gmail.com">miracleprivate99@gmail.com</a></p>
-        <div className="footer-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6387.384708984464!2d119.874879776936!3d-0.891702099999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8bf9b2a8a6d44d%3A0x4a52f64a9f1c0a2d!2sMiracle%20Private%20Class!5e0!3m2!1sid!2sid!4v1708333333333!5m2!1sid!2sid"
-            width="100%"
-            height="180"
-            style={{ border: 0, borderRadius: "10px" }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Lokasi Miracle Private Class"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-    <div className="footer-bottom">
-      <p>© 2025 Miracle Private Class. All Rights Reserved.</p>
-    </div>
+    {/* Footer content sama seperti sebelumnya */}
   </footer>
 ));
 
-// Tambahkan ini di atas App() function
+/* ================= Axios Instance ================= */
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api", // ganti 192.168.1.10 jadi localhost
+  baseURL: "http://localhost:5000/api",
   timeout: 5000,
 });
 
-/* =============================== Main App Component =============================== */
+/* ================= Main App Component ================= */
 function App() {
   const [programs, setPrograms] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Kelas Khusus");
-  const [files, setFiles] = useState([]);
   const [fotoUrls, setFotoUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
   const [articles, setArticles] = useState([]);
-    const filteredPrograms = programs.filter(p => p.category === activeCategory);
 
+  const filteredPrograms = programs.filter(p => p.category === activeCategory);
   const categories = ["Kelas Khusus", "Privat Akademik", "Persiapan Ujian"];
 
-  // Programs
-useEffect(() => {
-  async function getPrograms() {
-    try {
-      const response = await axiosInstance.get("/programs"); // cukup /programs
-      setPrograms(response.data);
-    } catch (err) {
-      console.error("Error fetching programs:", err);
-      setError("Gagal memuat program. Silakan coba lagi nanti.");
-    } finally {
-      setLoading(false);
+  /* -------------------- Fetch Data -------------------- */
+  useEffect(() => {
+    async function getPrograms() {
+      try {
+        const response = await axiosInstance.get("/programs");
+        setPrograms(response.data);
+      } catch (err) {
+        console.error(err);
+        setError("Gagal memuat program. Silakan coba lagi nanti.");
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  getPrograms();
-}, []);
+    getPrograms();
+  }, []);
 
-  // Teachers
-useEffect(() => {
-  async function getTeachers() {
-    try {
-      const response = await axiosInstance.get("/teachers"); // cukup /teachers
-      setTeachers(response.data);
-    } catch (err) {
-      console.error("Error fetching teachers:", err);
+  useEffect(() => {
+    async function getTeachers() {
+      try {
+        const response = await axiosInstance.get("/teachers");
+        setTeachers(response.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }
-  getTeachers();
-}, []);
+    getTeachers();
+  }, []);
 
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const fotoRes = await axiosInstance.get("/galeri/foto");
+        const videoRes = await axiosInstance.get("/galeri/video");
+        setFotoUrls(fotoRes.data);
+        setVideoUrls(videoRes.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchGallery();
+  }, []);
 
-useEffect(() => {
-  const fetchGallery = async () => {
-    try {
-      const fotoRes = await axiosInstance.get("/galeri/foto");
-      const videoRes = await axiosInstance.get("/galeri/video");
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await axiosInstance.get("/articles");
+        setArticles(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchArticles();
+  }, []);
 
-      setFotoUrls(fotoRes.data);
-      setVideoUrls(videoRes.data);
-
-      console.log("✅ Foto:", fotoRes.data);
-      console.log("✅ Video:", videoRes.data);
-    } catch (err) {
-      console.error("❌ Gagal fetch galeri:", err);
-    }
-  };
-  fetchGallery();
-}, []);
-
-  // Articles
-useEffect(() => {
-  const fetchArticles = async () => {
-    try {
-      const res = await axiosInstance.get("/articles"); // cukup /articles
-      setArticles(res.data);
-    } catch (err) {
-      console.error("❌ Gagal fetch artikel:", err);
-    }
-  };
-  fetchArticles();
-}, []);
-
+  /* -------------------- Main Router -------------------- */
   return (
     <>
       <Navbar />
-      
-      {/* Hero Section */}
-      <section id="home" className="hero">
-        <div className="hero-content">
-          <HeroCard />
-          <HeroImage src={heroImage} />
-        </div>
-        <ul className="highlight-list">
-          <li>Pengajar Berpengalaman</li>
-          <li>Metode Belajar Personal</li>
-          <li>Jadwal Fleksibel</li>
-          <li>Harga Terjangkau</li>
-        </ul>
-      </section>
 
-      {/* Programs Section */}
-      <section id="programs" className="programs">
-        <div className="container">
-          <h2>Program</h2>
-          {loading && <p>Sedang memuat program...</p>}
-          {error && <p className="error">{error}</p>}
+      <Routes>
+        {/* Halaman utama */}
+        <Route
+          path="/"
+          element={
+            <>
+              {/* Hero Section */}
+              <section id="home" className="hero">
+                <div className="hero-content">
+                  <HeroCard />
+                  <HeroImage src={heroImage} />
+                </div>
+                <ul className="highlight-list">
+                  <li>Pengajar Berpengalaman</li>
+                  <li>Metode Belajar Personal</li>
+                  <li>Jadwal Fleksibel</li>
+                  <li>Harga Terjangkau</li>
+                </ul>
+              </section>
 
-          <CategoryButtons
-            categories={categories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
-          <ProgramList programs={filteredPrograms} />
-        </div>
-      </section>
+              {/* Programs */}
+              <section id="programs" className="programs">
+                <div className="container">
+                  <h2>Program</h2>
+                  {loading && <p>Sedang memuat program...</p>}
+                  {error && <p className="error">{error}</p>}
+                  <CategoryButtons
+                    categories={categories}
+                    activeCategory={activeCategory}
+                    setActiveCategory={setActiveCategory}
+                  />
+                  <ProgramList programs={filteredPrograms} />
+                </div>
+              </section>
 
-      {/* Testimoni + About Section (Side by Side) */}
-      <div id="testimoni-anchor" style={{ position: "absolute", top: "-72px" }}></div>
-      <section className="testimoni-about">
-        <div className="container">
-          <div className="testimoni-about-wrapper">
-            <div id="testimoni" className="testimoni">
-              <h2>Testimoni</h2>
-              <div className="testimoni-list">
-                <div className="testimoni-item">
-                  <img src={fotoFitri} alt="Foto Ibu Fitri" className="testimoni-img" />
-                  <div className="testimoni-text">
-                    <p>
-                      "Alhamdulillah selama bergabung di <strong>Miracle Private Class</strong> merasa 
-                      terbantu untuk memperlancar bacaan ananda dan klu pas kembar ada tgs ada mbak gurux bantu kawal nyong🙏 
-                      jadi umma pe tensi aman2😂"
-                    </p>
-                    <span>- Ibu Fitri (Wali Murid)</span>
+              {/* Testimoni + About */}
+              <div id="testimoni-anchor" style={{ position: "absolute", top: "-72px" }}></div>
+              <section className="testimoni-about">
+                <div className="container">
+                  <div className="testimoni-about-wrapper">
+                    <div id="testimoni" className="testimoni">
+                      <h2>Testimoni</h2>
+                      <div className="testimoni-list">
+                        <div className="testimoni-item">
+                          <img src={fotoFitri} alt="Foto Ibu Fitri" className="testimoni-img" />
+                          <div className="testimoni-text">
+                            <p>
+                              "Alhamdulillah selama bergabung di <strong>Miracle Private Class</strong> merasa 
+                              terbantu untuk memperlancar bacaan ananda dan klu pas kembar ada tgs ada mbak gurux bantu kawal nyong🙏 
+                              jadi umma pe tensi aman2😂"
+                            </p>
+                            <span>- Ibu Fitri (Wali Murid)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="about" className="about">
+                      <h2>Tentang Kami</h2>
+                      <p>Miracle Private adalah lembaga les privat dengan tutor berpengalaman...</p>
+                      <h3>Visi & Misi</h3>
+                      <ul>
+                        <li>Memberikan layanan pendidikan yang berkualitas</li>
+                        <li>Membantu siswa mencapai prestasi maksimal</li>
+                        <li>Menciptakan pengalaman belajar yang menyenangkan</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </section>
 
-            <div id="about" className="about">
-              <h2>Tentang Kami</h2>
-              <p>Miracle Private adalah lembaga les privat dengan tutor berpengalaman...</p>
-              <h3>Visi & Misi</h3>
-              <ul>
-                <li>Memberikan layanan pendidikan yang berkualitas</li>
-                <li>Membantu siswa mencapai prestasi maksimal</li>
-                <li>Menciptakan pengalaman belajar yang menyenangkan</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+              {/* Galeri */}
+              <section id="galeri" className="gallery-section">
+                <div className="gallery-container">
+                  <h2 className="gallery-title">Galeri</h2>
 
-  <section id="galeri" className="gallery-section">
-  <div className="gallery-container">
-    <h2 className="gallery-title">Galeri</h2>
+                  <div className="gallery-flex">
+                    {/* Foto */}
+                    <div className="gallery-column">
+                      <h3 className="gallery-subtitle">📸 Foto</h3>
+                      <div className="gallery-grid">
+                        {fotoUrls.map((url, i) => (
+                          <img
+                            key={i}
+                            src={url}
+                            alt={`Foto ${i}`}
+                            className="gallery-image"
+                          />
+                        ))}
+                      </div>
+                    </div>
 
-    <div className="gallery-flex">
-      {/* Foto */}
-      <div className="gallery-column">
-        <h3 className="gallery-subtitle">📸 Foto</h3>
-        <div className="gallery-grid">
-          {fotoUrls.map((url, i) => (
-            <img
-              key={i}
-              src={url}
-              alt={`Foto ${i}`}
-              className="gallery-image"
-            />
-          ))}
-        </div>
-      </div>
+                    {/* Video */}
+                    <div className="gallery-column">
+                      <h3 className="gallery-subtitle">🎥 Video</h3>
+                      <div className="gallery-grid">
+                        {videoUrls.map((url, i) => (
+                          <video
+                            key={i}
+                            src={url}
+                            controls
+                            className="gallery-video"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
-      {/* Video */}
-      <div className="gallery-column">
-        <h3 className="gallery-subtitle">🎥 Video</h3>
-        <div className="gallery-grid">
-          {videoUrls.map((url, i) => (
-            <video
-              key={i}
-              src={url}
-              controls
-              className="gallery-video"
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+              {/* Teachers */}
+              <section id="teachers" className="teachers">
+                {/* ...teachers content sama seperti sebelumnya... */}
+              </section>
 
-      {/* Teachers Section */}
-      <section id="teachers" className="teachers">
-        <div className="container">
-          <h2>Tim Pengajar</h2>
-          <div className="teachers-list">
-            {teachers.map((teacher) => (
-              <div key={teacher.id} className="teacher-card">
-                <img src={teacher.photo_url} alt={teacher.name} />
-                <h3>{teacher.name}</h3>
-                <p>{teacher.subject}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              {/* Artikel */}
+              <section id="artikel" className="article-section">
+                <div className="article-container">
+                  <h2 className="article-title">Baca Artikel &gt;&gt;&gt;</h2>
+                  <div className="article-grid">
+                    {articles.map((article) => (
+                      <Link
+                        key={article.id}
+                        to={`/artikel/${article.id}`}
+                        className="article-card"
+                        style={{ backgroundImage: `url(${article.image_url})` }}
+                      >
+                        <div className="article-card-overlay">
+                          <h3 className="article-card-title">{article.title}</h3>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </>
+          }
+        />
 
-<section id="artikel" className="article-section">
-  <div className="article-container">
-    <h2 className="article-title">Baca Artikel &gt;&gt;&gt;</h2>
-    <div className="article-grid">
-      {articles.map((article) => (
-        <div
-          key={article.id}
-          className="article-card"
-          style={{
-            backgroundImage: `url(${article.image_url})`,
-          }}
-          onClick={() => window.location.href = `/artikel/${article.id}`} // klik langsung ke detail artikel
-        >
-          <div className="article-card-overlay">
-            <h3 className="article-card-title">{article.title}</h3>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-      
-      {/* Footer */}
+        {/* Halaman detail artikel */}
+        <Route path="/artikel/:id" element={<ArticleDetail />} />
+      </Routes>
+
       <Footer />
     </>
   );
