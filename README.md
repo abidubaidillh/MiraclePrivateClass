@@ -1,6 +1,7 @@
 # MIRACLEPRIVATECLASS
 
-![MIRACLEPRIVATECLASS Logo](https://raw.githubusercontent.com/abidubaidillh/MiraclePrivateClass/main/docs/logo.png)
+![Logo-MPC](https://github.com/user-attachments/assets/c9ba54e4-b13b-494b-af78-96edb3571f12)
+
 
 *Empowering Learning, Inspiring Futures, Unleashing Potential*
 
